@@ -1,4 +1,5 @@
 import streamlit as st
+import logging
 import pickle
 from dotenv import load_dotenv
 import os
@@ -61,7 +62,8 @@ def main():
 
             # Embeddings
             store_name = pdf.name[:-4]
-
+            logging.basicConfig(level=logging.DEBUG)
+             
             if os.path.exists(f"{store_name}.pkl"):
                 with open(f"{store_name}.pkl", "rb") as f:
                     vectorstore = pickle.load(f)
@@ -75,6 +77,8 @@ def main():
 
             if query:
                 docs = vectorstore.similarity_search(query=query, k=3)
+                except Exception as e:
+                st.error(f"An error occurred during similarity search: {e}")
 
                 # Check if conversation_chain is not initialized
                 if st.session_state.conversation is None:
