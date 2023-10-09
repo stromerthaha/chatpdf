@@ -77,9 +77,7 @@ def main():
 
             if query:
                 docs = vectorstore.similarity_search(query=query, k=3)
-                except Exception as e:
-                st.error(f"An error occurred during similarity search: {e}")
-
+                
                 # Check if conversation_chain is not initialized
                 if st.session_state.conversation is None:
                     llm = ChatOpenAI(model_name='gpt-3.5-turbo')
