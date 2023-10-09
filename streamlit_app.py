@@ -1,5 +1,4 @@
 import streamlit as st
-import logging
 import pickle
 from dotenv import load_dotenv
 import os
@@ -9,6 +8,7 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores.faiss import FAISS
 from langchain.chat_models import ChatOpenAI
 from langchain.chains.question_answering import load_qa_chain
+from langchain.callbacks import get_openai_callback
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from htmlTemplates import css, bot_template, user_template  # Import templates
@@ -22,7 +22,7 @@ This app is an LLM-powered chatbot built using:
 - [LangChain](https://python.langchain.com/)
 - [OpenAI](https://platform.openai.com/docs/models) LLM model
 \n\n
-Made by [Mohammed Thaha](https://github.com/stromerthaha/)
+Made with ❤️ by [Mohammed Thaha](https://github.com/stromerthaha/)
 ''')
 
 def main():
@@ -61,7 +61,6 @@ def main():
 
             # Embeddings
             store_name = pdf.name[:-4]
-            logging.basicConfig(level=logging.DEBUG)
 
             if os.path.exists(f"{store_name}.pkl"):
                 with open(f"{store_name}.pkl", "rb") as f:
