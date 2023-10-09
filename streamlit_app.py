@@ -22,7 +22,7 @@ This app is an LLM-powered chatbot built using:
 - [LangChain](https://python.langchain.com/)
 - [OpenAI](https://platform.openai.com/docs/models) LLM model
 \n\n
-Made with ❤️ by [Mohammed Thaha](https://github.com/stromerthaha/)
+Made by [Mohammed Thaha](https://github.com/stromerthaha/)
 ''')
 
 def main():
