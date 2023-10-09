@@ -13,9 +13,6 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from htmlTemplates import css, bot_template, user_template  # Import templates
 
-# Configure logging to display debugging information
-logging.basicConfig(level=logging.DEBUG)
-
 # Sidebar contents
 st.sidebar.title('🤗💬 LLM Chat App')
 st.sidebar.markdown('''
@@ -64,7 +61,8 @@ def main():
 
             # Embeddings
             store_name = pdf.name[:-4]
-             
+            logging.basicConfig(level=logging.DEBUG)
+
             if os.path.exists(f"{store_name}.pkl"):
                 with open(f"{store_name}.pkl", "rb") as f:
                     vectorstore = pickle.load(f)
@@ -77,6 +75,8 @@ def main():
             query = st.text_input("Ask questions about your PDF file:")
 
             if query:
+                docs = vectorstore.similarity_search(query=query, k=3)
+
                 # Check if conversation_chain is not initialized
                 if st.session_state.conversation is None:
                     llm = ChatOpenAI(model_name='gpt-3.5-turbo')
